@@ -133,4 +133,55 @@ describe("Barista", () => {
 
     expect(barista.orderCoffee("Capuccino")).toEqual(5);
   });
+
+  // Nouveaux tests pertinents ?
+
+  it("retourne false lorsque la quantité est insuffisante pour préparer un café", () => {
+    const barista = new Barista("Najim");
+    barista.addIngredient("milk", 3);
+    barista.addIngredient("coffee", 3);
+
+    const coffee = new Coffee("Capuccino", 5);
+    coffee.addIngredient("milk", 4);
+    coffee.addIngredient("coffee", 2);
+
+    expect(barista.makeCoffee(coffee)).toBe(false);
+  });
+
+  it("retourne true lorsqu'il a préparé un café", () => {
+    const barista = new Barista("Najim");
+    barista.addIngredient("milk", 5);
+    barista.addIngredient("coffee", 3);
+
+    const coffee = new Coffee("Capuccino", 5);
+    coffee.addIngredient("milk", 4);
+    coffee.addIngredient("coffee", 2);
+
+    expect(barista.makeCoffee(coffee)).toBe(true);
+  });
+
+  it("retourne null lorsqu'on commande un café qui n'existe pas", () => {
+    const barista = new Barista("Najim");
+
+    const coffee = new Coffee("Capuccino", 5);
+
+    barista.addCoffee(coffee);
+    barista.orderCoffee("Macciato")
+
+    expect(barista.orderCoffee("Macciato")).toBe(null);
+  });
+
+  it("retourne null lorsqu'on commande un café qui ne peut pas être préparé", () => {
+    const barista = new Barista("Najim");
+    barista.addIngredient("milk", 3);
+    barista.addIngredient("coffee", 3);
+
+    const coffee = new Coffee("Capuccino", 5);
+    coffee.addIngredient("milk", 4);
+    coffee.addIngredient("coffee", 2);
+
+    barista.addCoffee(coffee);
+
+    expect(barista.orderCoffee("Capuccino")).toBe(null);
+  });  
 });
